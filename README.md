@@ -1,168 +1,332 @@
-# DRM v6 Advanced - Dynamic Rule Matrix
+# 🧠 DRM Module v5.1 - Advanced Dynamic Rule Matrix
 
-**Advanced rule management system with complexity hierarchy and intelligent analysis**
+## 📋 Module Overview
 
-## 🚀 Key Innovations v6
+**DRM (Dynamic Rule Matrix) v5.1** is an advanced rule management system with complexity hierarchy, Bayesian learning, and intelligent conflict resolution. The module has been significantly enhanced and integrated with complexity hierarchy functionalities.
 
-### **Complexity Hierarchy**
-```
-ATOMIC (1) → Simple conditions, fastest execution
-SIMPLE (2) → Atomic combinations, basic logic
-COMPOUND (3) → Complex conditions, multi-step processing
-COMPLEX (4) → Advanced algorithms, machine learning
-COMPOSITE (5) → Meta-rules, managing other rules
-```
+## ✨ Key Features
 
-### **Intelligent Management**
-- ✅ **Automatic classification** of rule complexity
-- ✅ **Execution optimization** according to computational cost
-- ✅ **Dynamic composition** Rules from simpler ones
-- ✅ **Detecting duplicates**, semantic and behavioral
-- ✅ **Advanced search** by tag, category, type
+### 🔥 **Rule Complexity Hierarchy**
 
-## 📦 Quick Start
+* **5 complexity levels**: ATOMIC → SIMPLE → COMPOUND → COMPLEX → COMPOSITE
+* **Automatic execution cost calculation** based on complexity
+* **Rule composition** – build complex rules from simpler ones
+* **Execution prioritization** by cost and complexity
 
-```python
-from drm_module6_advanced import *
+### 🎯 **Advanced Rule Types**
 
-# Creating a system
-drm = DRMSystem()
+* **LOGICAL**: Immutable logical rules with test validation
+* **HEURISTIC**: Adaptive heuristic rules
+* **HYBRID**: Hybrid rules with gradient learning
 
-# Adding rules of varying complexity
-physics_rule = create_physics_rule("conservation", "Mass Conservation", tolerance=1e-6)
-ml_rule = create_optimization_rule("optimizer", "Gradient Descent", alpha=0.01)
+### 🧠 **Intelligent Bayesian Learning**
 
-drm.add_rule(physics_rule)
-drm.add_rule(ml_rule)
+* **Posterior updates** with `post_mean` and `post_var`
+* **Multiplicative weight updates** for optimization
+* **Replay Buffer** with per-rule performance history
+* **Stagnation Detection** with adaptive thresholds
 
-# Searching and filtering
-physics_rules = drm.search_rules_by_tags(["physics"])
-fast_rules = drm.get_rules_by_complexity("ATOMIC")
+### ⚔️ **Advanced Conflict Resolution**
 
-# Execution Optimization
-optimal_order = drm.optimize_execution_order()
-print(f"Optimal order: {optimal_order}")
+* **Conflict detection**: groups, parameters, domains, conditions
+* **Resolution strategies**: priority, performance, consensus
+* **Context-aware conflicts** with domain sensitivity
+* **Automatic quarantine** of conflicting rules
 
-# System Analysis
-stats = drm.get_complexity_stats()
-print(f"Optimization potential: {stats['optimization_potential']:.1%}")
-```
+### 📊 **Comprehensive Analytics**
 
-## 🏗️ Rule Architecture
+* **Performance trends** with pattern analysis
+* **Similarity analysis** (semantic, behavioral, structural)
+* **Pattern recognition** with automatic recommendations
+* **Complexity statistics** with distributions and metrics
 
-### **Rule Types**
-- **LOGICAL**: Immutable, strict validation, protected from mutation
-- **HEURISTIC**: Adaptive, tolerant, flexible parameters
-- **HYBRID**: Learning, gradient parameters, flexible balance
+## 🏗️ Module Architecture
 
-### **Organization**
+### **Core Classes:**
+
+#### **1. Rule** – Basic rule class
+
 ```python
 Rule(
-id="my_rule",
-rtype=LOGICAL,
-category="physics", # Domain category
-tags={"conservation", "fundamental"}, # Flexible tagging
-complexity_level="ATOMIC", # Automatically classified
-priority=10, # Priority in conflicts
-params={"tolerance": RuleParameter(1e-6, min_val=1e-9, max_val=1e-3)}
+    id="rule_001",
+    name="Example Rule",
+    rtype=HYBRID,
+    complexity_level="COMPOUND",
+    parent_rules=[],
+    child_rules=[],
+    pre_conditions=["input_ready"],
+    post_conditions=["output_generated"],
+    params={"threshold": RuleParameter(0.5)},
+    tests=[lambda rule, ctx: ctx.get("valid", True)]
 )
 ```
 
-## 🔍 Advanced Features
+#### **2. DRMSystem** – Main management system
 
-### **Searching and Filtering**
 ```python
-# Searching by tags (AND/OR logic)
-rules = drm.search_rules_by_tags(["physics", "conservation"], match_all=True)
+drm = DRMSystem()
+drm.add_rule(rule)
+drm.run_cycle(evaluator_function)
+```
 
-# Multi-criteria filtering
+#### **3. ComplexityAnalyzer** – Complexity analysis
+
+```python
+score = ComplexityAnalyzer.calculate_complexity_score(rule)
+level = ComplexityAnalyzer.classify_complexity(rule)
+```
+
+#### **4. ConflictResolver** – Conflict resolution
+
+```python
+conflicts = resolver.detect_conflicts(rules, context)
+quarantined = resolver.resolve_conflicts(conflicts, rules, "priority")
+```
+
+### **Learning Components:**
+
+#### **ReplayBuffer** – Experience buffer
+
+* Stores rule performance history
+* Pattern analysis per domain
+* Supports rule generator training
+
+#### **RuleGenerator** – New rule generator
+
+* Latent space representation
+* Training on replay buffer with rule-type context
+* Adaptive learning rates
+
+#### **StagnationDetector** – Stagnation detection
+
+* Monitors entropy and performance
+* Adaptive thresholds based on rule count
+* Change history for trend analysis
+
+#### **DiversityEnforcer** – Diversity enforcement
+
+* Similarity-based rule filtering
+* Diversity score calculation
+* Automatic duplicate removal
+
+## 🚀 Installation and Usage
+
+### Basic Usage:
+
+```python
+from drm_module5_improved import DRMSystem, Rule, RuleParameter, HYBRID
+
+# System initialization
+drm = DRMSystem()
+
+# Rule creation
+rule = Rule(
+    id="adaptive_control",
+    name="Adaptive Control Rule",
+    rtype=HYBRID,
+    complexity_level="COMPOUND",
+    pre_conditions=["system_ready"],
+    post_conditions=["control_applied"],
+    params={
+        "gain": RuleParameter(value=0.8, min_val=0.1, max_val=1.0, requires_grad=True)
+    },
+    category="control",
+    tags={"adaptive", "control", "feedback"}
+)
+
+# Add rule
+result = drm.add_rule(rule, check_conflicts=True)
+
+# Define evaluator
+def evaluator(rule):
+    # Rule performance evaluation logic
+    return 0.85  # Example score
+
+# Run learning cycle
+cycle_result = drm.run_cycle(evaluator)
+```
+
+### Advanced Features:
+
+#### **Search and Filter:**
+
+```python
+# Search by complexity
+compound_rules = drm.get_rules_by_complexity("COMPOUND")
+
+# Advanced filtering
 filtered = drm.filter_rules(
-rule_types=[LOGICAL, HYBRID],
-categories=["physics", "optimization"],
-complexity_levels=["ATOMIC", "SIMPLE"]
+    rule_types=["HYBRID"],
+    categories=["control"],
+    min_performance=0.7,
+    performance_classes=["high"]
 )
 ```
 
-### **Detecting Duplicates**
-```python
-# Automatic similarity detection
-duplicates = drm.detect_duplicates(
-semantic_threshold=0.8, # Structural similarity
-behavioral_threshold=0.9 # Performance similarity
-)
+#### **Rule Composition:**
 
-print(f"Found {duplicates['total_duplicates']} duplicates")
-```
-
-### **Composing Rules**
 ```python
-# Creating meta-rules from simpler ones
+# Create composite rule
 composite = drm.compose_rules(
-["rule1", "rule2", "rule3"],
-
-"validation_pipeline"
+    rule_ids=["rule_001", "rule_002"],
+    composite_id="composite_control"
 )
-
-if composite:
-drm.add_rule(composite)
-print(f"Rule {composite.complexity_level} created")
 ```
 
-### **Pattern Analysis**
+#### **Analysis and Statistics:**
+
 ```python
-# Complex System Analysis
+# System statistics
+stats = drm.get_stats()
+complexity_stats = drm.get_complexity_stats()
+
+# Pattern analysis
 patterns = drm.analyze_rule_patterns()
-print(f"Type distribution: {patterns['type_distribution']}")
-print(f"Complexity distribution: {patterns['complexity_distribution']}")
-print(f"Most frequent tags: {list(patterns['tag_frequency'].keys())[:5]}")
+
+# Rule recommendations
+recommendations = drm.get_rule_recommendations("rule_001")
 ```
 
-## ⚡ Performance Optimization
+## 📊 Metrics and Monitoring
 
-### **Intelligent Execution**
+### **Key Metrics:**
+
+* **Performance Score**: Average rule performance
+* **Diversity Score**: Diversity level in system
+* **Complexity Distribution**: Distribution of complexity levels
+* **Conflict Rate**: Frequency of conflicts
+* **Learning Progress**: Training progress
+
+### **Real-Time Monitoring:**
+
 ```python
-# Optimal Ordering (fast first)
-execution_order = drm.optimize_execution_order()
-
-# Adaptation to load
-if high_cpu_load:
-fast_rules = drm.get_rules_by_complexity("ATOMIC")
-# Use only the fastest rules
+# Current statistics
+current_stats = {
+    "active_rules": len(drm.get_active_rules()),
+    "quarantined_rules": len([r for r in drm.rules.values() if r.quarantined]),
+    "average_performance": sum(r.post_mean for r in drm.rules.values()) / len(drm.rules),
+    "complexity_distribution": drm.get_complexity_stats()["complexity_distribution"]
+}
 ```
 
-### **Performance Statistics**
+## 🔧 Configuration and Customization
+
+### **System Parameters:**
+
 ```python
-stats = drm.get_complexity_stats()
-print(f"Average execution cost: {stats['average_execution_cost']:.2f}")
-print(f"Optimization potential: {stats['optimization_potential']:.1%}")
+# Learning cycle configuration
+cycle_params = {
+    "eta": 0.05,        # Learning rate
+    "beta": 0.6,        # Momentum
+    "lam": 0.4,         # Regularization
+    "kl_max": 0.5,      # KL divergence limit
+    "mu_min": 0.1,      # Minimum weight
+    "tau": 0.95         # Temperature
+}
+
+result = drm.run_cycle(evaluator, **cycle_params)
 ```
 
-## 🎯 Use Cases
+### **Conflict Resolution Strategies:**
 
-### **Validation System**
+* `"priority"`: Based on rule priority
+* `"performance"`: Based on performance
+* `"consensus"`: Multi-factor approach
+
+## 💾 Serialization and Persistence
+
+### **JSON Save/Load:**
+
 ```python
-# Validation hierarchy from simple to complex
-atomic_check = create_atomic_rule("positive_check", "x > 0")
-compound_validator = create_compound_rule("full_validation", ["check1", "check2"])
+# Save to file
+drm.save_json("drm_state.json", include_audit=True)
+
+# Load from file
+drm.load_json("drm_state.json")
 ```
 
-### **Physical System**
+### **Dict Serialization:**
+
 ```python
-# Laws of physics of various complexity
-conservation_law = create_physics_rule("mass_conservation", "Mass Conservation")
-fluid_dynamics = create_complex_rule("navier_stokes", "Fluid Dynamics Solver")
+# Export to dictionary
+state_dict = drm.to_dict()
+
+# Import from dictionary
+drm_restored = DRMSystem.from_dict(state_dict)
 ```
 
-### **ML/AI system**
+## 🔍 Debugging and Diagnostics
+
+### **Rule Validation:**
+
 ```python
-# From simple heuristics to advanced algorithms
-simple_classifier = create_pattern_rule("threshold_classifier", "Simple Threshold")
-neural_network = create_complex_rule("deep_net", "Deep Neural Network")
+# Validate single rule
+validation_result = drm.validate_rule("rule_001", context)
+
+# Rule explanation
+explanation = drm.explain_rule("rule_001")
 ```
 
-## 📊 Benefits
+### **Audit Log:**
 
-- **🚀 Performance**: 20-50% speedup through order optimization
-- **🧠 Intelligence**: Automatic detection of duplicates and patterns
-- **📈 Scaling**: Adapts to system load
-- **🔄 Evolution**: Dynamic creation and composition
+```python
+# Review change history
+for entry in drm.audit_log:
+    print(f"{entry['timestamp']}: {entry['action']} - {entry['rule_id']}")
+```
+
+## ⚠️ Best Practices
+
+### **1. Rule Design:**
+
+* Use descriptive IDs and names
+* Define clear pre/post conditions
+* Set appropriate parameters with constraints
+* Add tags for easier search
+
+### **2. Complexity Management:**
+
+* Start with ATOMIC rules
+* Gradually build COMPOUND and COMPLEX
+* Use composition for COMPOSITE
+* Monitor execution costs
+
+### **3. Performance Optimization:**
+
+* Run learning cycles regularly
+* Monitor stagnation and diversity
+* Remove inefficient rules
+* Adjust learning parameters
+
+### **4. Conflict Resolution:**
+
+* Define conflict groups
+* Set appropriate priorities
+* Monitor quarantine
+* Use context-aware detection
+
+## 📈 Example Use Cases
+
+### **1. Control Systems:**
+
+* Adaptive control systems
+* Process optimization
+* Feedback loops
+
+### **2. Artificial Intelligence:**
+
+* Rule-based reasoning
+* Hybrid AI systems
+* Knowledge representation
+
+### **3. Data Analysis:**
+
+* Pattern recognition
+* Decision trees
+* Feature engineering
+
+### **4. Expert Systems:**
+
+* Medical diagnosis
+* Financial analysis
+* Technical troubleshooting
